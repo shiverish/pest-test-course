@@ -68,24 +68,30 @@ const activeTab = ref('beginner');
                                 <button 
                                     @click="activeTab = 'beginner'"
                                     :class="[
-                                        'px-6 py-3 rounded-xl font-semibold transition-all duration-300',
+                                        'px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2',
                                         activeTab === 'beginner' 
                                             ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 shadow-[0_0_20px_rgba(99,102,241,0.2)]' 
                                             : 'bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-gray-300'
                                     ]"
                                 >
                                     Beginner Fundamentals
+                                    <span class="text-sm opacity-70 border border-current rounded-full px-2 py-0.5 ml-1">
+                                        {{ course.lessons.filter(l => l.section === 'beginner' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'beginner').length }}
+                                    </span>
                                 </button>
                                 <button 
                                     @click="activeTab = 'intermediate'"
                                     :class="[
-                                        'px-6 py-3 rounded-xl font-semibold transition-all duration-300',
+                                        'px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2',
                                         activeTab === 'intermediate' 
                                             ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]' 
                                             : 'bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-gray-300'
                                     ]"
                                 >
                                     Intermediate Techniques
+                                    <span class="text-sm opacity-70 border border-current rounded-full px-2 py-0.5 ml-1">
+                                        {{ course.lessons.filter(l => l.section === 'intermediate' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'intermediate').length }}
+                                    </span>
                                 </button>
                             </div>
 
