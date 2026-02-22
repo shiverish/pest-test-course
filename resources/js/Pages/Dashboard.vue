@@ -48,29 +48,63 @@ defineProps({
                                 {{ course.description }}
                             </p>
 
-                            <!-- Lesson List -->
-                            <div class="flex flex-col gap-3">
-                                <Link 
-                                    v-for="lesson in course.lessons" 
-                                    :key="lesson.id" 
-                                    :href="route('lesson.show', lesson.id)"
-                                    class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.1)] transition-all group/lesson"
-                                >
-                                    <span class="text-sm font-medium text-gray-300 group-hover/lesson:text-indigo-400 transition-colors truncate pr-4">
-                                        {{ lesson.title }}
-                                    </span>
-                                    
-                                    <div v-if="userProgress.includes(lesson.id)" class="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center shrink-0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
+                            <!-- Lesson Sections Grouping -->
+                            <div class="flex flex-col gap-6">
+                                <!-- Beginner Section -->
+                                <div v-if="course.lessons.filter(l => l.section === 'beginner').length > 0">
+                                    <h4 class="text-lg font-bold text-white mb-3">Beginner Lessons</h4>
+                                    <div class="flex flex-col gap-3">
+                                        <Link 
+                                            v-for="lesson in course.lessons.filter(l => l.section === 'beginner')" 
+                                            :key="lesson.id" 
+                                            :href="route('lesson.show', lesson.id)"
+                                            class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.1)] transition-all group/lesson"
+                                        >
+                                            <span class="text-sm font-medium text-gray-300 group-hover/lesson:text-indigo-400 transition-colors truncate pr-4">
+                                                {{ lesson.title }}
+                                            </span>
+                                            
+                                            <div v-if="userProgress.includes(lesson.id)" class="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center shrink-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                            <div v-else class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover/lesson:border-indigo-400 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400 opacity-0 group-hover/lesson:opacity-100 group-hover/lesson:text-indigo-400 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                </svg>
+                                            </div>
+                                        </Link>
                                     </div>
-                                    <div v-else class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover/lesson:border-indigo-400 transition-colors">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400 opacity-0 group-hover/lesson:opacity-100 group-hover/lesson:text-indigo-400 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
+                                </div>
+
+                                <!-- Intermediate Section -->
+                                <div v-if="course.lessons.filter(l => l.section === 'intermediate').length > 0">
+                                    <h4 class="text-lg font-bold text-white mb-3 mt-4">Intermediate Lessons</h4>
+                                    <div class="flex flex-col gap-3">
+                                        <Link 
+                                            v-for="lesson in course.lessons.filter(l => l.section === 'intermediate')" 
+                                            :key="lesson.id" 
+                                            :href="route('lesson.show', lesson.id)"
+                                            class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.1)] transition-all group/lesson"
+                                        >
+                                            <span class="text-sm font-medium text-gray-300 group-hover/lesson:text-indigo-400 transition-colors truncate pr-4">
+                                                {{ lesson.title }}
+                                            </span>
+                                            
+                                            <div v-if="userProgress.includes(lesson.id)" class="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center shrink-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </div>
+                                            <div v-else class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center shrink-0 group-hover/lesson:border-indigo-400 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400 opacity-0 group-hover/lesson:opacity-100 group-hover/lesson:text-indigo-400 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                                </svg>
+                                            </div>
+                                        </Link>
                                     </div>
-                                </Link>
+                                </div>
                             </div>
                         </div>
                         

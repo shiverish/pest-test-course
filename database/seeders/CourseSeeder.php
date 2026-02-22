@@ -170,6 +170,7 @@ class CourseSeeder extends Seeder
         // INTERMEDIATE SECTION
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 16: Datasets',
             'content' => 'Pest allows parameterised tests through Datasets. Write a test that receives an email from a dataset and verifies it contains the "@" symbol.',
             'starter_test_code' => "test('emails contain @', function (string \$email) {\n    // Assert \$email contains @\n})->with(['taylor@laravel.com', 'nuno@pestphp.com']);",
@@ -180,6 +181,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 17: Shared Datasets',
             'content' => 'Instead of defining inline arrays, you can define shared datasets across your test suite. Assume a dataset named "valid_emails" exists. Use the `with()` method to link it.',
             'starter_test_code' => "test('dataset works', function (\$email) {\n    expect(\$email)->toContain('@');\n})->// Call with() with the dataset name;",
@@ -190,6 +192,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 18: Scoped Datasets',
             'content' => 'You can pass associative arrays to datasets to test keys and values simultaneously. Given a dataset of usernames and ages, test that the age equals the expected value.',
             'starter_test_code' => "test('user ages', function (\$username, \$age) {\n    // Expect \$age to equal the expected value based on your testing logic\n})->with([\n    ['taylor', 35],\n    ['nuno', 30]\n]);",
@@ -200,6 +203,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 19: Mocking with Mockery',
             'content' => 'Mocking dependencies is crucial in isolated unit tests. Use Laravel\'s built-in mocking wrapper `$this->mock()` to mock a `PaymentGateway` and expect the `charge` method to return true.',
             'starter_test_code' => "test('it charges payment', function () {\n    \$mock = \$this->mock(PaymentGateway::class, function (MockInterface \$mock) {\n        // Set the expectation for the charge method here\n    });\n});",
@@ -210,6 +214,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 20: Partial Mocks',
             'content' => 'Sometimes you want to mock specific methods but allow others to execute normally. Use `$this->partialMock()` on the `UserRepository` to mock only the `delete` method.',
             'starter_test_code' => "test('partial mock example', function () {\n    \$mock = \$this->partialMock(UserRepository::class, function (MockInterface \$mock) {\n        // Mock the delete method to return true\n    });\n});",
@@ -220,6 +225,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 21: Spies',
             'content' => 'Spies allow you to verify a method was called after the code executes, without defining behavior upfront. Use `$this->spy()` on the `NewsletterInterface` and then assert `subscribe` was called.',
             'starter_test_code' => "test('it spies on subscriber', function () {\n    \$spy = \$this->spy(NewsletterInterface::class);\n    \$spy->subscribe('test@example.com');\n    // Verify the subscribe method was called\n});",
@@ -230,6 +236,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 22: Testing Time (travelTo)',
             'content' => 'Often, business logic depends on the current date. Laravel\'s `travelTo` allows you to freeze time. Travel to the year 2000.',
             'starter_test_code' => "test('time travel works', function () {\n    // Travel to the year 2000 using a specific datetime string\n    expect(now()->year)->toBe(2000);\n});",
@@ -240,6 +247,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 23: Testing Artisan Commands',
             'content' => 'When testing Artisan commands, you can verify console output. Test the `inspire` command and expect it to output successfully.',
             'starter_test_code' => "test('inspire command works', function () {\n    // use artisan() to call inspire and assert successful exit code\n});",
@@ -250,6 +258,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 24: Custom Expectations',
             'content' => 'Pest allows extending the expectation API. Assume a custom expectation named `toBePhoneNumber()` is defined. Use it to validate `$phone`.',
             'starter_test_code' => "test('phone number is valid', function () {\n    \$phone = '+15551234567';\n    // Call the custom expectation\n});",
@@ -260,6 +269,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 25: Testing Events',
             'content' => 'Laravel makes it easy to fake Events. Write an assertion to establish that the `UserRegistered` event was dispatched.',
             'starter_test_code' => "test('user registered event dispatched', function () {\n    Event::fake();\n    event(new UserRegistered());\n    // Verify the event was dispatched\n});",
@@ -270,6 +280,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 26: Testing Mailables',
             'content' => 'Just like events, mail can be faked. After faking the mailer, send a WelcomeEmail and assert it was sent.',
             'starter_test_code' => "test('welcome email was sent', function () {\n    Mail::fake();\n    Mail::to('test@example.com')->send(new WelcomeEmail());\n    // Verify the mailable was sent\n});",
@@ -280,6 +291,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 27: RefreshDatabase Trait',
             'content' => 'When your tests touch the database, you need to use Laravel\'s RefreshDatabase. Pest accomplishes this through the `uses()` function. Call it with the RefreshDatabase trait.',
             'starter_test_code' => "// Set up the file to use the RefreshDatabase trait\nuses(RefreshDatabase::class);\n\ntest('database is empty', function () {\n    expect(User::count())->toBe(0);\n});",
@@ -290,6 +302,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 28: Model Factories',
             'content' => 'Factories are indispensable for generating dummy data. Create 3 User models using the User factory.',
             'starter_test_code' => "test('creates users', function () {\n    // Create 3 users and assign them to \$users\n    expect(\$users)->toHaveCount(3);\n});",
@@ -300,6 +313,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 29: API Testing (JSON Paths)',
             'content' => 'When testing JSON APIs, it is helpful to assert data at specific paths within the JSON structure. Assert the "data.name" path equals "Taylor".',
             'starter_test_code' => "test('api returns correct name', function () {\n    \$response = \$this->getJson('/api/user/1');\n    // Call assertJsonPath to verify data.name is Taylor\n});",
@@ -310,6 +324,7 @@ class CourseSeeder extends Seeder
 
         \App\Models\Lesson::create([
             'course_id' => $course->id,
+            'section' => 'intermediate',
             'title' => 'Lesson 30: API Testing (Status Codes)',
             'content' => 'Ensure your API endpoints return correct HTTP statuses. Check that a successful creation endpoint returns a 201 Created status.',
             'starter_test_code' => "test('api creates resource', function () {\n    \$response = \$this->postJson('/api/resource', ['name' => 'New']);\n    // Assert the status code denotes a successful creation (201)\n});",
