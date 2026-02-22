@@ -53,8 +53,8 @@ const activeTab = ref('beginner');
                                         {{ course.description }}
                                     </p>
                                 </div>
-                                <div class="shrink-0">
-                                    <Link :href="route('course.show', course.id)" class="px-8 py-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors group">
+                                <div class="shrink-0" v-if="course.lessons.length > 0">
+                                    <Link :href="route('lesson.show', course.lessons[0].id)" class="px-8 py-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors group">
                                         <span class="text-white font-semibold group-hover:text-indigo-300 transition-colors">Start Learning Journey</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400 transform group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

@@ -27,8 +27,8 @@ const submitTest = () => {
         <template #header>
             <div class="flex items-center justify-between">
                 <h2 class="font-semibold text-xl text-white leading-tight">
-                    <Link :href="route('course.show', lesson.course_id)" class="text-indigo-400 hover:text-indigo-300 mr-2">
-                        &larr; Courses
+                    <Link :href="route('dashboard')" class="text-indigo-400 hover:text-indigo-300 mr-2">
+                        &larr; Dashboard
                     </Link>
                     / {{ lesson.title }}
                 </h2>

@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [\App\Http\Controllers\CourseController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/courses/{course}', [\App\Http\Controllers\CourseController::class, 'show'])->name('course.show');
+    Route::redirect('/courses/{course}', '/dashboard')->name('course.show');
     Route::get('/lessons/{lesson}', [\App\Http\Controllers\LessonController::class, 'show'])->name('lesson.show');
     Route::post('/lessons/{lesson}/submit', [\App\Http\Controllers\LessonController::class, 'submit'])->name('lesson.submit');
     
