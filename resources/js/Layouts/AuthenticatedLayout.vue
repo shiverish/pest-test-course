@@ -51,7 +51,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
+                            <div class="relative ms-3" v-if="$page.props.auth.user">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -92,6 +92,11 @@ const showingNavigationDropdown = ref(false);
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
+                            </div>
+                            <!-- Guest Links -->
+                            <div v-else class="flex items-center gap-4">
+                                <Link :href="route('login')" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Log in</Link>
+                                <Link :href="route('register')" class="px-5 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-sm font-bold shadow-[0_0_15px_rgba(99,102,241,0.3)] text-white transition-all">Register to Save Progress</Link>
                             </div>
                         </div>
 
@@ -158,6 +163,7 @@ const showingNavigationDropdown = ref(false);
                     <!-- Responsive Settings Options -->
                     <div
                         class="border-t border-white/10 pb-1 pt-4"
+                        v-if="$page.props.auth.user"
                     >
                         <div class="px-4">
                             <div
@@ -180,6 +186,17 @@ const showingNavigationDropdown = ref(false);
                                 as="button"
                             >
                                 Log Out
+                            </ResponsiveNavLink>
+                        </div>
+                    </div>
+                    
+                    <div v-else class="border-t border-white/10 pb-1 pt-4">
+                        <div class="mt-3 space-y-1">
+                            <ResponsiveNavLink :href="route('login')">
+                                Log in
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('register')">
+                                Register to Save Progress
                             </ResponsiveNavLink>
                         </div>
                     </div>

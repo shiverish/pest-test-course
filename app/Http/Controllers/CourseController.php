@@ -14,7 +14,9 @@ class CourseController extends Controller
             $query->orderBy('order_index');
         }])->get();
         
-        $userProgress = auth()->user()->progress()->pluck('lesson_id')->toArray();
+        $userProgress = auth()->check() 
+            ? auth()->user()->progress()->pluck('lesson_id')->toArray()
+            : session('completed_lessons', []);
 
         return Inertia::render('Dashboard', [
             'courses' => $courses,
@@ -28,7 +30,9 @@ class CourseController extends Controller
             $query->orderBy('order_index');
         }]);
         
-        $userProgress = auth()->user()->progress()->pluck('lesson_id')->toArray();
+        $userProgress = auth()->check() 
+            ? auth()->user()->progress()->pluck('lesson_id')->toArray()
+            : session('completed_lessons', []);
 
         return Inertia::render('Course/Show', [
             'course' => $course,

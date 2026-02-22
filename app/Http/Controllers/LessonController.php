@@ -13,10 +13,14 @@ class LessonController extends Controller
     {
         $lesson->load('course');
         
-        $completed = UserProgress::where('user_id', auth()->id())
-            ->where('lesson_id', $lesson->id)
-            ->where('completed', true)
-            ->exists();
+        if (auth()->check()) {
+            $completed = UserProgress::where('user_id', auth()->id())
+                ->where('lesson_id', $lesson->id)
+                ->where('completed', true)
+                ->exists();
+        } else {
+            $completed = in_array($lesson->id, session('completed_lessons', []));
+        }
 
         $nextLesson = Lesson::where('course_id', $lesson->course_id)
             ->where('order_index', '>', $lesson->order_index)
@@ -49,10 +53,18 @@ class LessonController extends Controller
         $passed = str_contains($normalizedSubmitted, $normalizedExpected);
 
         if ($passed) {
-            UserProgress::updateOrCreate(
-                ['user_id' => auth()->id(), 'lesson_id' => $lesson->id],
-                ['completed' => true]
-            );
+            if (auth()->check()) {
+                UserProgress::updateOrCreate(
+                    ['user_id' => auth()->id(), 'lesson_id' => $lesson->id],
+                    ['completed' => true]
+                );
+            } else {
+                $completedLessons = session('completed_lessons', []);
+                if (!in_array($lesson->id, $completedLessons)) {
+                    $completedLessons[] = $lesson->id;
+                    session(['completed_lessons' => $completedLessons]);
+                }
+            }
 
             return back()->with('success', 'Test passed successfully! Great job.');
         }

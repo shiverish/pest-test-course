@@ -94,7 +94,7 @@ defineProps({
 
             <div class="flex flex-col sm:flex-row gap-4">
                 <Link
-                    :href="route('register')"
+                    :href="route('dashboard')"
                     class="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-xl overflow-hidden shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:-translate-y-0.5"
                 >
                     <div class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></div>

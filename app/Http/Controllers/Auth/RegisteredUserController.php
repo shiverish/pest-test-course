@@ -46,6 +46,22 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $completedLessons = session('completed_lessons', []);
+        if (!empty($completedLessons)) {
+            $progressData = collect($completedLessons)->map(function ($lessonId) use ($user) {
+                return [
+                    'user_id' => $user->id,
+                    'lesson_id' => $lessonId,
+                    'completed' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            })->toArray();
+            
+            \App\Models\UserProgress::insert($progressData);
+            session()->forget('completed_lessons');
+        }
+
         return redirect(route('dashboard', absolute: false));
     }
 }
