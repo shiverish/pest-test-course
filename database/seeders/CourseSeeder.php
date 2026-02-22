@@ -166,5 +166,156 @@ class CourseSeeder extends Seeder
             'hint' => 'expect($isActive)->toBeFalsy(); works perfectly.',
             'order_index' => 15,
         ]);
+
+        // INTERMEDIATE SECTION
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 16: Datasets',
+            'content' => 'Pest allows parameterised tests through Datasets. Write a test that receives an email from a dataset and verifies it contains the "@" symbol.',
+            'starter_test_code' => "test('emails contain @', function (string \$email) {\n    // Assert \$email contains @\n})->with(['taylor@laravel.com', 'nuno@pestphp.com']);",
+            'expected_assertion' => "expect(\$email)->toContain('@');",
+            'hint' => "Use expect(\$email)->toContain('@'); inside the closure.",
+            'order_index' => 16,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 17: Shared Datasets',
+            'content' => 'Instead of defining inline arrays, you can define shared datasets across your test suite. Assume a dataset named "valid_emails" exists. Use the `with()` method to link it.',
+            'starter_test_code' => "test('dataset works', function (\$email) {\n    expect(\$email)->toContain('@');\n})->// Call with() with the dataset name;",
+            'expected_assertion' => "->with('valid_emails');",
+            'hint' => "Chain ->with('valid_emails'); right after your test block.",
+            'order_index' => 17,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 18: Scoped Datasets',
+            'content' => 'You can pass associative arrays to datasets to test keys and values simultaneously. Given a dataset of usernames and ages, test that the age equals the expected value.',
+            'starter_test_code' => "test('user ages', function (\$username, \$age) {\n    // Expect \$age to equal the expected value based on your testing logic\n})->with([\n    ['taylor', 35],\n    ['nuno', 30]\n]);",
+            'expected_assertion' => 'expect($age)->toBeInt();',
+            'hint' => 'Just for this exercise, verify the $age is an integer using expect($age)->toBeInt();',
+            'order_index' => 18,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 19: Mocking with Mockery',
+            'content' => 'Mocking dependencies is crucial in isolated unit tests. Use Laravel\'s built-in mocking wrapper `$this->mock()` to mock a `PaymentGateway` and expect the `charge` method to return true.',
+            'starter_test_code' => "test('it charges payment', function () {\n    \$mock = \$this->mock(PaymentGateway::class, function (MockInterface \$mock) {\n        // Set the expectation for the charge method here\n    });\n});",
+            'expected_assertion' => '$mock->shouldReceive(\'charge\')->andReturn(true);',
+            'hint' => 'Use $mock->shouldReceive(\'charge\')->andReturn(true); inside the mock closure.',
+            'order_index' => 19,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 20: Partial Mocks',
+            'content' => 'Sometimes you want to mock specific methods but allow others to execute normally. Use `$this->partialMock()` on the `UserRepository` to mock only the `delete` method.',
+            'starter_test_code' => "test('partial mock example', function () {\n    \$mock = \$this->partialMock(UserRepository::class, function (MockInterface \$mock) {\n        // Mock the delete method to return true\n    });\n});",
+            'expected_assertion' => '$mock->shouldReceive(\'delete\')->andReturn(true);',
+            'hint' => 'Partial mocks use the same shouldReceive() syntax. Write $mock->shouldReceive(\'delete\')->andReturn(true);',
+            'order_index' => 20,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 21: Spies',
+            'content' => 'Spies allow you to verify a method was called after the code executes, without defining behavior upfront. Use `$this->spy()` on the `NewsletterInterface` and then assert `subscribe` was called.',
+            'starter_test_code' => "test('it spies on subscriber', function () {\n    \$spy = \$this->spy(NewsletterInterface::class);\n    \$spy->subscribe('test@example.com');\n    // Verify the subscribe method was called\n});",
+            'expected_assertion' => '$spy->shouldHaveReceived(\'subscribe\');',
+            'hint' => 'You can assert a spy was called using $spy->shouldHaveReceived(\'subscribe\');',
+            'order_index' => 21,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 22: Testing Time (travelTo)',
+            'content' => 'Often, business logic depends on the current date. Laravel\'s `travelTo` allows you to freeze time. Travel to the year 2000.',
+            'starter_test_code' => "test('time travel works', function () {\n    // Travel to the year 2000 using a specific datetime string\n    expect(now()->year)->toBe(2000);\n});",
+            'expected_assertion' => '$this->travelTo(Carbon::parse(\'2000-01-01\'));',
+            'hint' => 'Use $this->travelTo(Carbon::parse(\'2000-01-01\')); to move time to the year 2000.',
+            'order_index' => 22,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 23: Testing Artisan Commands',
+            'content' => 'When testing Artisan commands, you can verify console output. Test the `inspire` command and expect it to output successfully.',
+            'starter_test_code' => "test('inspire command works', function () {\n    // use artisan() to call inspire and assert successful exit code\n});",
+            'expected_assertion' => '$this->artisan(\'inspire\')->assertSuccessful();',
+            'hint' => 'Chain ->assertSuccessful() on $this->artisan(\'inspire\');',
+            'order_index' => 23,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 24: Custom Expectations',
+            'content' => 'Pest allows extending the expectation API. Assume a custom expectation named `toBePhoneNumber()` is defined. Use it to validate `$phone`.',
+            'starter_test_code' => "test('phone number is valid', function () {\n    \$phone = '+15551234567';\n    // Call the custom expectation\n});",
+            'expected_assertion' => 'expect($phone)->toBePhoneNumber();',
+            'hint' => 'Just like regular expectations, chain ->toBePhoneNumber(); directly on expect($phone).',
+            'order_index' => 24,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 25: Testing Events',
+            'content' => 'Laravel makes it easy to fake Events. Write an assertion to establish that the `UserRegistered` event was dispatched.',
+            'starter_test_code' => "test('user registered event dispatched', function () {\n    Event::fake();\n    event(new UserRegistered());\n    // Verify the event was dispatched\n});",
+            'expected_assertion' => 'Event::assertDispatched(UserRegistered::class);',
+            'hint' => 'Use Event::assertDispatched(UserRegistered::class); to check if it launched.',
+            'order_index' => 25,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 26: Testing Mailables',
+            'content' => 'Just like events, mail can be faked. After faking the mailer, send a WelcomeEmail and assert it was sent.',
+            'starter_test_code' => "test('welcome email was sent', function () {\n    Mail::fake();\n    Mail::to('test@example.com')->send(new WelcomeEmail());\n    // Verify the mailable was sent\n});",
+            'expected_assertion' => 'Mail::assertSent(WelcomeEmail::class);',
+            'hint' => 'Use Mail::assertSent(WelcomeEmail::class); to ensure the mail was indeed queued/sent.',
+            'order_index' => 26,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 27: RefreshDatabase Trait',
+            'content' => 'When your tests touch the database, you need to use Laravel\'s RefreshDatabase. Pest accomplishes this through the `uses()` function. Call it with the RefreshDatabase trait.',
+            'starter_test_code' => "// Set up the file to use the RefreshDatabase trait\nuses(RefreshDatabase::class);\n\ntest('database is empty', function () {\n    expect(User::count())->toBe(0);\n});",
+            'expected_assertion' => 'uses(RefreshDatabase::class);',
+            'hint' => 'Ensure the uses(RefreshDatabase::class); calls happen at the top of the test file.',
+            'order_index' => 27,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 28: Model Factories',
+            'content' => 'Factories are indispensable for generating dummy data. Create 3 User models using the User factory.',
+            'starter_test_code' => "test('creates users', function () {\n    // Create 3 users and assign them to \$users\n    expect(\$users)->toHaveCount(3);\n});",
+            'expected_assertion' => '$users = User::factory()->count(3)->create();',
+            'hint' => 'Assign the result of User::factory()->count(3)->create(); to the $users variable.',
+            'order_index' => 28,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 29: API Testing (JSON Paths)',
+            'content' => 'When testing JSON APIs, it is helpful to assert data at specific paths within the JSON structure. Assert the "data.name" path equals "Taylor".',
+            'starter_test_code' => "test('api returns correct name', function () {\n    \$response = \$this->getJson('/api/user/1');\n    // Call assertJsonPath to verify data.name is Taylor\n});",
+            'expected_assertion' => '$response->assertJsonPath(\'data.name\', \'Taylor\');',
+            'hint' => 'Use $response->assertJsonPath(\'data.name\', \'Taylor\'); to pinpoint the nested field.',
+            'order_index' => 29,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'title' => 'Lesson 30: API Testing (Status Codes)',
+            'content' => 'Ensure your API endpoints return correct HTTP statuses. Check that a successful creation endpoint returns a 201 Created status.',
+            'starter_test_code' => "test('api creates resource', function () {\n    \$response = \$this->postJson('/api/resource', ['name' => 'New']);\n    // Assert the status code denotes a successful creation (201)\n});",
+            'expected_assertion' => '$response->assertCreated();',
+            'hint' => 'You can chain ->assertCreated() against the $response object.',
+            'order_index' => 30,
+        ]);
     }
 }
