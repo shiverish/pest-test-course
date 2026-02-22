@@ -75,7 +75,7 @@ const activeTab = ref('beginner');
                                     ]"
                                 >
                                     Beginner Fundamentals
-                                    <span class="text-sm opacity-70 border border-current rounded-full px-2 py-0.5 ml-1">
+                                    <span class="text-sm bg-black/30 rounded-full px-2.5 py-0.5 ml-1 font-medium">
                                         {{ course.lessons.filter(l => l.section === 'beginner' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'beginner').length }}
                                     </span>
                                 </button>
@@ -89,7 +89,7 @@ const activeTab = ref('beginner');
                                     ]"
                                 >
                                     Intermediate Techniques
-                                    <span class="text-sm opacity-70 border border-current rounded-full px-2 py-0.5 ml-1">
+                                    <span class="text-sm bg-black/30 rounded-full px-2.5 py-0.5 ml-1 font-medium">
                                         {{ course.lessons.filter(l => l.section === 'intermediate' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'intermediate').length }}
                                     </span>
                                 </button>
