@@ -10,10 +10,15 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::withCount('lessons')->get();
-        // Calculate user progress per course if needed, simple version for MVP
+        $courses = Course::withCount('lessons')->with(['lessons' => function ($query) {
+            $query->orderBy('order_index');
+        }])->get();
+        
+        $userProgress = auth()->user()->progress()->pluck('lesson_id')->toArray();
+
         return Inertia::render('Dashboard', [
-            'courses' => $courses
+            'courses' => $courses,
+            'userProgress' => $userProgress
         ]);
     }
 
