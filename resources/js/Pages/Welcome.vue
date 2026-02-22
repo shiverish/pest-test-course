@@ -25,16 +25,18 @@ defineProps({
         
         <!-- Animated Background Elements -->
         <div class="fixed inset-0 z-0 pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-900/20 blur-[120px] animate-pulse"></div>
-            <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-900/20 blur-[150px] animate-pulse" style="animation-delay: 2s;"></div>
-            <div class="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-pink-900/10 blur-[100px] animate-pulse" style="animation-delay: 4s;"></div>
-            <div class="absolute inset-0 bg-[url('https://laravel.com/assets/img/welcome/background.svg')] opacity-20 bg-center bg-no-repeat mix-blend-screen"></div>
+            <!-- Simplified, less aggressive glows -->
+            <div class="absolute top-[0%] left-[10%] w-[30%] h-[30%] rounded-full bg-indigo-900/10 blur-[120px] animate-pulse"></div>
+            <div class="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] rounded-full bg-purple-900/10 blur-[150px] animate-pulse" style="animation-delay: 2s;"></div>
+            
+            <!-- Replaced loud SVG with a subtle radial gradient -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900/40 via-[#0a0a0a] to-[#0a0a0a]"></div>
         </div>
 
         <!-- Navigation -->
-        <nav class="relative z-50 px-6 py-6 max-w-7xl mx-auto flex justify-between items-center">
+        <nav class="relative z-50 px-6 py-6 w-full max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3 group cursor-pointer">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xl shadow-[0_0_20px_rgba(99,102,241,0.5)] group-hover:scale-110 transition-transform">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:scale-110 transition-transform">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                     </svg>
@@ -46,7 +48,7 @@ defineProps({
                 <Link
                     v-if="$page.props.auth.user"
                     :href="route('dashboard')"
-                    class="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold backdrop-blur-md transition-all hover:scale-105"
+                    class="px-5 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold backdrop-blur-md transition-all hover:scale-105"
                 >
                     Dashboard
                 </Link>
@@ -54,7 +56,7 @@ defineProps({
                 <template v-else>
                     <Link
                         :href="route('login')"
-                        class="px-5 py-2.5 text-sm font-semibold text-gray-300 hover:text-white transition-colors"
+                        class="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors hidden sm:block"
                     >
                         Log in
                     </Link>
@@ -62,9 +64,9 @@ defineProps({
                     <Link
                         v-if="canRegister"
                         :href="route('register')"
-                        class="px-6 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-sm font-bold shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] text-white transition-all transform hover:-translate-y-0.5"
+                        class="px-5 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-sm font-bold shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_25px_rgba(99,102,241,0.5)] text-white transition-all transform hover:-translate-y-0.5"
                     >
-                        Get Started Free
+                        Get Started
                     </Link>
                 </template>
             </div>
@@ -90,13 +92,13 @@ defineProps({
                 Ditch the boring video tutorials. Dive into a hands-on, interactive code environment where you write real unit tests, learn Pest's elegant syntax, and level up your engineering career.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-6">
+            <div class="flex flex-col sm:flex-row gap-4">
                 <Link
                     :href="route('register')"
-                    class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-xl overflow-hidden shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:shadow-[0_0_60px_rgba(79,70,229,0.7)] hover:-translate-y-1"
+                    class="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-indigo-600 font-pj rounded-xl overflow-hidden shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_40px_rgba(79,70,229,0.5)] hover:-translate-y-0.5"
                 >
                     <div class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></div>
-                    <span class="relative flex items-center gap-2 text-lg">
+                    <span class="relative flex items-center gap-2 text-md">
                         Start Coding Now
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -106,7 +108,7 @@ defineProps({
 
                 <a
                     href="#features"
-                    class="inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 backdrop-blur-md"
+                    class="inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 backdrop-blur-md text-md"
                 >
                     View Curriculum
                 </a>
@@ -196,11 +198,27 @@ defineProps({
         </section>
 
         <!-- Footer -->
-        <footer class="relative z-10 py-12 text-center text-sm text-gray-500">
-            <div class="flex justify-center items-center gap-2 mb-4">
-                Laravel v{{ laravelVersion }} &bull; PHP v{{ phpVersion }}
+        <footer class="relative z-10 bg-black/80 py-12 text-center text-sm text-gray-500 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2 font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                    <span class="text-white">PestMastery</span>
+                </div>
+                
+                <div class="flex gap-6 text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">Curriculum</a>
+                    <a href="#" class="hover:text-white transition-colors">Pricing</a>
+                    <a href="#" class="hover:text-white transition-colors">Methodology</a>
+                    <a href="#" class="hover:text-white transition-colors">Sign Code</a>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-md">Laravel v{{ laravelVersion }}</span>
+                    <span class="px-2 py-1 bg-white/5 border border-white/10 rounded-md">PHP v{{ phpVersion }}</span>
+                </div>
             </div>
-            <p>Built interactively using Inertia, Vue, Tailwind CSS, & Bun.</p>
         </footer>
     </div>
 </template>
