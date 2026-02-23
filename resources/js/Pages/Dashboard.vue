@@ -93,6 +93,20 @@ const activeTab = ref('beginner');
                                         {{ course.lessons.filter(l => l.section === 'intermediate' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'intermediate').length }}
                                     </span>
                                 </button>
+                                <button 
+                                    @click="activeTab = 'advanced'"
+                                    :class="[
+                                        'px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2',
+                                        activeTab === 'advanced' 
+                                            ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30 shadow-[0_0_20px_rgba(244,63,94,0.2)]' 
+                                            : 'bg-white/5 text-gray-400 border border-transparent hover:bg-white/10 hover:text-gray-300'
+                                    ]"
+                                >
+                                    Advanced Controllers
+                                    <span class="text-sm bg-black/30 rounded-full px-2.5 py-0.5 ml-1 font-medium">
+                                        {{ course.lessons.filter(l => l.section === 'advanced' && userProgress.includes(l.id)).length }}/{{ course.lessons.filter(l => l.section === 'advanced').length }}
+                                    </span>
+                                </button>
                             </div>
 
                             <!-- Lessons List -->
@@ -105,7 +119,7 @@ const activeTab = ref('beginner');
                                 >
                                     <div class="w-10 h-10 shrink-0 rounded-lg bg-black/40 border border-white/10 flex items-center justify-center mr-6 group-hover:bg-white/10 transition-colors">
                                         <span class="font-bold text-gray-400 group-hover:text-white transition-colors">
-                                            {{ lesson.section === 'beginner' ? index + 1 : index + 16 }}
+                                            {{ lesson.section === 'beginner' ? index + 1 : (lesson.section === 'intermediate' ? index + 16 : index + 31) }}
                                         </span>
                                     </div>
                                     
@@ -114,9 +128,8 @@ const activeTab = ref('beginner');
                                     </h4>
 
                                     <div class="flex items-center gap-6">
-                                        <!-- Play Button Hover Effect -->
                                         <div class="flex items-center text-sm font-semibold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
-                                             :class="activeTab === 'beginner' ? 'text-indigo-400' : 'text-purple-400'"
+                                             :class="activeTab === 'beginner' ? 'text-indigo-400' : (activeTab === 'intermediate' ? 'text-purple-400' : 'text-rose-400')"
                                         >
                                             <span class="mr-2">Play Lesson</span>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

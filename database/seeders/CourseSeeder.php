@@ -332,5 +332,114 @@ class CourseSeeder extends Seeder
             'hint' => 'You can chain ->assertCreated() against the $response object.',
             'order_index' => 30,
         ]);
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 31: Testing Index Views',
+            'content' => 'When testing controllers, verifying the correct view is returned is essential. Use `assertViewIs()` to check if the `users.index` view is returned by the given response.',
+            'starter_test_code' => "test('users index returns correct view', function () {\n    \$response = \$this->get('/users');\n    // Verify the response uses the 'users.index' view\n});",
+            'expected_assertion' => '$response->assertViewIs(\'users.index\');',
+            'hint' => "Use \$response->assertViewIs('users.index'); on the response.",
+            'order_index' => 31,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 32: Testing View Data',
+            'content' => 'Beyond just returning a view, controllers pass data to them. Use `assertViewHas()` to ensure the view was given a `user` variable.',
+            'starter_test_code' => "test('show method passes user data', function () {\n    \$user = User::factory()->create();\n    \$response = \$this->get('/users/' . \$user->id);\n    // Verify the view has the 'user' variable injected\n});",
+            'expected_assertion' => '$response->assertViewHas(\'user\');',
+            'hint' => "Use \$response->assertViewHas('user');",
+            'order_index' => 32,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 33: Testing Redirects',
+            'content' => 'After successfully storing a resource, controllers typically redirect the user. Use `assertRedirect()` to confirm the response redirects to `/users`.',
+            'starter_test_code' => "test('store method redirects to index', function () {\n    \$response = \$this->post('/users', ['name' => 'John', 'email' => 'john@test.com']);\n    // Verify it redirects to '/users'\n});",
+            'expected_assertion' => '$response->assertRedirect(\'/users\');',
+            'hint' => "Use \$response->assertRedirect('/users');",
+            'order_index' => 33,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 34: Testing Validation Errors',
+            'content' => 'If a user submits invalid data, the controller should bounce them back with errors. Use `assertSessionHasErrors()` to verify an error was thrown for the `email` field.',
+            'starter_test_code' => "test('store method requires an email', function () {\n    \$response = \$this->post('/users', ['name' => 'John']); // Missing email\n    // Verify the session has errors for 'email'\n});",
+            'expected_assertion' => '$response->assertSessionHasErrors(\'email\');',
+            'hint' => "Use \$response->assertSessionHasErrors('email');",
+            'order_index' => 34,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 35: Testing Database Insertions',
+            'content' => 'A controller update method modifies the database. Use `assertDatabaseHas()` to directly query the `users` table and verify the email was changed to `new@example.com`.',
+            'starter_test_code' => "test('update method saves changes', function () {\n    \$user = User::factory()->create();\n    \$this->patch('/users/' . \$user->id, ['email' => 'new@example.com']);\n    // Assert the 'users' table has the new email\n});",
+            'expected_assertion' => '$this->assertDatabaseHas(\'users\', [\'email\' => \'new@example.com\']);',
+            'hint' => "Use \$this->assertDatabaseHas('users', ['email' => 'new@example.com']);",
+            'order_index' => 35,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 36: Testing Database Deletions',
+            'content' => 'When a resource is deleted, you should verify it is gone. Use `assertDatabaseMissing()` to check the `users` table no longer has the given user ID.',
+            'starter_test_code' => "test('destroy method removes user', function () {\n    \$user = User::factory()->create();\n    \$this->delete('/users/' . \$user->id);\n    // Assert the database is missing this user's ID\n});",
+            'expected_assertion' => '$this->assertDatabaseMissing(\'users\', [\'id\' => $user->id]);',
+            'hint' => "Use \$this->assertDatabaseMissing('users', ['id' => \$user->id]);",
+            'order_index' => 36,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 37: Testing Auth Middleware',
+            'content' => 'Controllers often require authentication. If a guest tries to access a protected route, they should be bounced. Expect the response to redirect to the `/login` route.',
+            'starter_test_code' => "test('guests cannot access dashboard', function () {\n    \$response = \$this->get('/dashboard'); // No actingAs() call\n    // Assert the response redirects to '/login'\n});",
+            'expected_assertion' => '$response->assertRedirect(\'/login\');',
+            'hint' => "Use \$response->assertRedirect('/login');",
+            'order_index' => 37,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 38: Testing File Uploads',
+            'content' => 'To test controllers handling file uploads, use Laravel\'s Http Fake. After uploading, verify the file exists on the `avatars` disk using `Storage::disk()->assertExists()`.',
+            'starter_test_code' => "test('users can upload avatars', function () {\n    Storage::fake('avatars');\n    \$file = UploadedFile::fake()->image('avatar.jpg');\n    \$this->post('/avatar', ['avatar' => \$file]);\n    // Verify the file exists on the avatars disk\n});",
+            'expected_assertion' => 'Storage::disk(\'avatars\')->assertExists($file->hashName());',
+            'hint' => "Use Storage::disk('avatars')->assertExists(\$file->hashName());",
+            'order_index' => 38,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 39: Testing JSON Responses',
+            'content' => 'When your controller returns JSON instead of a view, you can check its structure. Verify the response contains exact JSON using `assertJson()`.',
+            'starter_test_code' => "test('api returns user payload', function () {\n    \$response = \$this->getJson('/api/status');\n    // Verify the exact JSON matching ['status' => 'ok']\n});",
+            'expected_assertion' => '$response->assertJson([\'status\' => \'ok\']);',
+            'hint' => "Use \$response->assertJson(['status' => 'ok']);",
+            'order_index' => 39,
+        ]);
+
+        \App\Models\Lesson::create([
+            'course_id' => $course->id,
+            'section' => 'advanced',
+            'title' => 'Lesson 40: Testing Request Authorization',
+            'content' => 'Form Requests process authorization before hitting the controller. If a user is denied, a 403 Forbidden status is returned. Use `assertForbidden()` to test this.',
+            'starter_test_code' => "test('normal users cannot delete admins', function () {\n    \$user = User::factory()->create(['is_admin' => false]);\n    \$response = \$this->actingAs(\$user)->delete('/admin/users/1');\n    // Assert the response is forbidden (403)\n});",
+            'expected_assertion' => '$response->assertForbidden();',
+            'hint' => "Use \$response->assertForbidden(); on the response.",
+            'order_index' => 40,
+        ]);
     }
 }
